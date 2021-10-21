@@ -93,13 +93,15 @@ class FRCNN(object):
         #-------------------------------#
         self.net    = FasterRCNN(self.num_classes, "predict", anchor_scales = self.anchors_size, backbone = self.backbone)
         device      = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+        # print(device)
         self.net.load_state_dict(torch.load(self.model_path, map_location=device))
         self.net    = self.net.eval()
         print('{} model, anchors, and classes loaded.'.format(self.model_path))
         
         if self.cuda:
-            self.net = nn.DataParallel(self.net)
-            self.net = self.net.cuda()
+            print('vvvvvv')
+            self.net = nn.DataParallel(self.net.cuda())
+            # self.net = self.net.cuda()
     
     #---------------------------------------------------#
     #   检测图片
@@ -126,10 +128,10 @@ class FRCNN(object):
         #   添加上batch_size维度
         #---------------------------------------------------------#
         image_data  = np.expand_dims(np.transpose(preprocess_input(np.array(image_data, dtype='float32')), (2, 0, 1)), 0)
-
         with torch.no_grad():
             images = torch.from_numpy(image_data)
             if self.cuda:
+                # print('vvvvvv')
                 images = images.cuda()
             
             #-------------------------------------------------------------#
