@@ -30,7 +30,8 @@ train_percent       = 0.9
 #   指向VOC数据集所在的文件夹
 #   默认指向根目录下的VOC数据集
 #-------------------------------------------------------#
-VOCdevkit_path  = 'VOCdevkit'
+# VOCdevkit_path  = 'VOCdevkit'
+VOCdevkit_path = 'dogface_data'
 
 VOCdevkit_sets  = [('2007', 'train'), ('2007', 'val')]
 classes, _      = get_classes(classes_path)
@@ -94,6 +95,10 @@ if __name__ == "__main__":
         fval.close()  
         ftest.close()
         print("Generate txt in ImageSets done.")
+        #Generate txt in ImageSets.
+        #train and val size 1812
+        #train size 1630
+
 
     if annotation_mode == 0 or annotation_mode == 2:
         print("Generate 2007_train.txt and 2007_val.txt for train.")
