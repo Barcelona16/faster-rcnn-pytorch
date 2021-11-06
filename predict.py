@@ -1,3 +1,4 @@
+# coding=UTF-8
 #----------------------------------------------------#
 #   将单张图片预测、摄像头检测和FPS测试功能
 #   整合到了一个py文件中，通过指定mode进行模式的修改。
@@ -58,17 +59,29 @@ if __name__ == "__main__":
         5、如果想要在预测图上写额外的字，比如检测到的特定目标的数量，可以进入frcnn.detect_image函数，在绘图部分对predicted_class进行判断，
         比如判断if predicted_class == 'car': 即可判断当前目标是否为车，然后记录数量即可。利用draw.text即可写字。
         '''
-        while True:
-            img = input('Input image filename:')
-            try:
-                image = Image.open(img)
-            except:
-                print('Open Error! Try again!')
-                continue
-            else:
+        # 批量测试
+        inputpath = "../dog_img7/"
+        dir_list = os.listdir(inputpath)
+        for dir in dir_list:
+            image_list = os.listdir((inputpath + dir))
+            for img in image_list:
+                # img = input('Input image filename:')
+                image = Image.open(inputpath+dir+"/"+img)
                 r_image = frcnn.detect_image(image)
-                r_image.save("img.jpg")
-                #r_image.show()
+                r_image.save("output/"+ dir+ img)
+
+        # 单个测试
+        # while True:
+        #     img = input('Input image filename:')
+        #     try:
+        #         image = Image.open(img)
+        #     except:
+        #         print('Open Error! Try again!')
+        #         continue
+        #     else:
+        #         r_image = frcnn.detect_image(image)
+        #         r_image.save("img.jpg")
+        #         #r_image.show()
 
     elif mode == "video":
         capture=cv2.VideoCapture(video_path)
