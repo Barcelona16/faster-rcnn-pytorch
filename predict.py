@@ -60,7 +60,7 @@ if __name__ == "__main__":
         比如判断if predicted_class == 'car': 即可判断当前目标是否为车，然后记录数量即可。利用draw.text即可写字。
         '''
         # 批量测试
-        inputpath = "../dog_img7/"
+        inputpath = "../body_dogparty/train/"
         dir_list = os.listdir(inputpath)
         for dir in dir_list:
             image_list = os.listdir((inputpath + dir))
@@ -68,7 +68,9 @@ if __name__ == "__main__":
                 # img = input('Input image filename:')
                 image = Image.open(inputpath+dir+"/"+img)
                 r_image = frcnn.detect_image(image)
-                r_image.save("output/"+ dir+ img)
+                r_image.save(inputpath+dir+"/"+img)
+                print(inputpath+dir+"/"+img)
+                # r_image.save("output/"+ dir+ img)
 
         # 单个测试
         # while True:
