@@ -7,6 +7,9 @@ import torch
 import torch.nn as nn
 from PIL import Image, ImageDraw, ImageFont
 
+from PIL import ImageFile
+ImageFile.LOAD_TRUNCATED_IMAGES = True
+
 from nets.frcnn import FasterRCNN
 from utils.utils import (cvtColor, get_classes, get_new_img_size, resize_image,
                          preprocess_input)
@@ -27,8 +30,8 @@ class FRCNN(object):
         #   model_path指向logs文件夹下的权值文件，classes_path指向model_data下的txt
         #   如果出现shape不匹配，同时要注意训练时的model_path和classes_path参数的修改
         #--------------------------------------------------------------------------#
-        "model_path"    : 'model_data/voc_weights_resnet.pth',
-        # "model_path"    : 'logs/ep098-loss0.222-val_loss0.202.pth',
+        # "model_path"    : 'model_data/voc_weights_resnet.pth',
+        "model_path"    : 'logs/ep098-loss0.222-val_loss0.202.pth',
         "classes_path"  : 'model_data/voc_classes.txt',
         #---------------------------------------------------------------------#
         #   网络的主干特征提取网络，resnet50或者vgg
@@ -187,7 +190,7 @@ class FRCNN(object):
             if predicted_class == 'dog':
                 xy = (left, top, right, bottom)
                 region = image.crop(xy)
-                region.save('crop.jpg')
+                # region.save('crop.jpg')
                 return region
             else:
                 return image

@@ -12,7 +12,7 @@ from PIL import Image
 from frcnn import FRCNN
 
 import os
-os.environ["CUDA_VISIBLE_DEVICES"] = "1"
+os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 # 这份代码好像不可以并行跑
 
 if __name__ == "__main__":
@@ -60,7 +60,7 @@ if __name__ == "__main__":
         比如判断if predicted_class == 'car': 即可判断当前目标是否为车，然后记录数量即可。利用draw.text即可写字。
         '''
         # 批量测试
-        inputpath = "../body_dogparty/train/"
+        inputpath = "../face_dogparty/train/"
         dir_list = os.listdir(inputpath)
         for dir in dir_list:
             image_list = os.listdir((inputpath + dir))
