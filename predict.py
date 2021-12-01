@@ -59,18 +59,37 @@ if __name__ == "__main__":
         5、如果想要在预测图上写额外的字，比如检测到的特定目标的数量，可以进入frcnn.detect_image函数，在绘图部分对predicted_class进行判断，
         比如判断if predicted_class == 'car': 即可判断当前目标是否为车，然后记录数量即可。利用draw.text即可写字。
         '''
-        # 批量测试
-        inputpath = "../face_dogparty/train/"
+        # # 批量测试
+        # inputpath = "../dogparty/val/"
+        # dir_list = os.listdir(inputpath)
+        # for dir in dir_list:
+        #     image_list = os.listdir((inputpath + dir))
+        #     for img in image_list:
+        #         # img = input('Input image filename:')
+        #         image = Image.open(inputpath+dir+"/"+img)
+        #         r_image = frcnn.detect_image(image)
+        #         r_image.save(inputpath+dir+"/"+img)
+        #         print(inputpath+dir+"/"+img)
+        #         # r_image.save("output/"+ dir+ img)
+
+        # --------------------------------
+
+        # 批量测试v2 能识别的就保留，识别不出来的就删掉
+        inputpath = "../dogparty_good/val/"
         dir_list = os.listdir(inputpath)
         for dir in dir_list:
             image_list = os.listdir((inputpath + dir))
             for img in image_list:
                 # img = input('Input image filename:')
                 image = Image.open(inputpath+dir+"/"+img)
-                r_image = frcnn.detect_image(image)
-                r_image.save(inputpath+dir+"/"+img)
-                print(inputpath+dir+"/"+img)
+                r_image, signal = frcnn.detect_image(image)
+                if signal == False:
+                    os.remove(inputpath+dir+"/"+img)
+                    print(inputpath + dir + "/" + img)
+                # r_image.save(inputpath+dir+"/"+img)
+                # print(inputpath+dir+"/"+img)
                 # r_image.save("output/"+ dir+ img)
+
 
         # 单个测试
         # while True:

@@ -184,17 +184,31 @@ class FRCNN(object):
             draw = ImageDraw.Draw(image)
             label_size = draw.textsize(label, font)
             label = label.encode('utf-8')
+
             # -------------- 裁剪图片
+            # print("info\n")
+            # print(label, top, left, bottom, right)
+            # if predicted_class == 'dog':
+            #     xy = (left, top, right, bottom)
+            #     region = image.crop(xy)
+            #     # region.save('crop.jpg')
+            #     return region
+            # else:
+            #     return image
+            # ---------------
+
+            # -------------- 裁剪图片v2 过滤掉识别失败的
             print("info\n")
             print(label, top, left, bottom, right)
             if predicted_class == 'dog':
                 xy = (left, top, right, bottom)
-                region = image.crop(xy)
+                # region = image.crop(xy)
                 # region.save('crop.jpg')
-                return region
+                return image, True
             else:
-                return image
+                return image, False
             # ---------------
+
             if top - label_size[1] >= 0:
                 text_origin = np.array([left, top - label_size[1]])
             else:
